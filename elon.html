@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এলন মাস্কের টাকা | Hudai.fun</title>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; }
+        #money-bar {
+            background: #00ffcc;
+            color: #000;
+            padding: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .item {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #222;
+        }
+        .item img { width: 100px; height: 100px; display: block; margin: 0 auto 10px; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .buy { background: #00ffcc; color: #000; }
+        .sell { background: #ff4444; color: #fff; }
+    </style>
+</head>
+<body>
+    <div id="money-bar">$250,000,000,000</div>
+    <h1>এলন মাস্কের টাকা খরচ করুন</h1>
+
+    <div class="grid" id="items-container"></div>
+
+    <script>
+        let balance = 250000000000;
+        const items = [
+            { name: "Kacchi Biryani", price: 10, icon: "🍲" },
+            { name: "iPhone 15 Pro", price: 1000, icon: "📱" },
+            { name: "Tesla Model S", price: 90000, icon: "🚗" },
+            { name: "Boeing 747", price: 400000000, icon: "✈️" },
+            { name: "Buy Twitter (X)", price: 44000000000, icon: "🐦" }
+        ];
+
+        const container = document.getElementById('items-container');
+        const moneyDisplay = document.getElementById('money-bar');
+
+        function updateUI() {
+            moneyDisplay.innerText = "$" + balance.toLocaleString();
+        }
+
+        items.forEach(item => {
+            let div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `
+                <div style="font-size:40px">${item.icon}</div>
+                <h3>${item.name}</h3>
+                <p>$${item.price.toLocaleString()}</p>
+                <button class="sell" onclick="sell('${item.name}', ${item.price})">Sell</button>
+                <button class="buy" onclick="buy('${item.name}', ${item.price})">Buy</button>
+            `;
+            container.appendChild(div);
+        });
+
+        function buy(name, price) {
+            if (balance >= price) {
+                balance -= price;
+                updateUI();
+            }
+        }
+
+        function sell(name, price) {
+            balance += price;
+            updateUI();
+        }
+    </script>
+</body>
+</html>
